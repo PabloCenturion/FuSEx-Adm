@@ -1,15 +1,15 @@
 services:
   app:
     build: .
-    container_name: gestaofinanceira-app
+    container_name: gestaofinanceira-backend
     ports:
       - "8080:8080"
     depends_on:
       - mysql
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/gestao_financeira
-      DB_USER: root
-      DB_PASSWORD: barcopirata007
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
 
   mysql:
     image: mysql:8.0
@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: gestao_financeira
-      MYSQL_ROOT_PASSWORD: barcopirata007
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -26,7 +26,7 @@ services:
   frontend:
     build:
       context: ./frontend/frontend
-    container_name: gestaofinanceira-front
+    container_name: gestaofinanceira-frontend
     ports:
       - "4200:80"
     depends_on:
